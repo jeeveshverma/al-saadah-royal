@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img"><title>Khareef hills placeholder</title>
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#C9D6CC"/><stop offset=".55" stop-color="#E4E8DC"/><stop offset="1" stop-color="#F1EBDD"/>
+  </linearGradient>
+  <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8DAE92"/><stop offset="1" stop-color="#6E967A"/></linearGradient>
+  <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E8C68"/><stop offset="1" stop-color="#3F7352"/></linearGradient>
+  <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2F6445"/><stop offset="1" stop-color="#1E4A34"/></linearGradient>
+  <linearGradient id="mist" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="1600" height="1000" fill="url(#sky)"/>
+<circle cx="1180" cy="250" r="90" fill="#fff" opacity=".55"/>
+<path d="M0 560 C180 470 300 420 470 455 C640 490 720 380 900 360 C1080 340 1180 430 1340 410 C1460 395 1540 360 1600 350 V1000 H0Z" fill="url(#m1)"/>
+<rect y="470" width="1600" height="90" fill="url(#mist)" opacity=".8"/>
+<path d="M0 680 C160 600 330 560 520 600 C700 640 820 540 1000 520 C1180 500 1300 590 1460 570 C1530 562 1570 550 1600 545 V1000 H0Z" fill="url(#m2)"/>
+<rect y="610" width="1600" height="70" fill="url(#mist)" opacity=".6"/>
+<path d="M0 800 C220 730 420 720 640 760 C860 800 1000 720 1220 715 C1400 712 1500 760 1600 770 V1000 H0Z" fill="url(#m3)"/>
+<g fill="#173F31" opacity=".9">
+  <path d="M1250 770 q6-60 2-120 M1253 655 q-40-10-62 18 q34-6 62-6 q-20-34-58-40 q40 0 58 28 q8-40 42-52 q-20 34-30 56 q36-18 70-4 q-40 2-72 20 q40 4 56 36 q-34-22-66-12" stroke="#173F31" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M1330 790 q4-46 1-90 M1331 704 q-30-8-46 14 q26-5 46-5 q-15-26-43-30 q30 0 43 21 q6-30 31-39 q-15 26-22 42 q27-14 52-3 q-30 2-54 15 q30 3 42 27 q-25-16-49-9" stroke="#173F31" stroke-width="6" fill="none" stroke-linecap="round"/>
+</g>
+<rect y="880" width="1600" height="120" fill="#0E2A20" opacity=".35"/>
+
+</svg>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jeeveshverma.github.io/al-saadah-royal/sitemap.xml

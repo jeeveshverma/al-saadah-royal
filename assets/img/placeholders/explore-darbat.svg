@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img"><title>Wadi Darbat illustration</title>
+<rect width="800" height="500" fill="#DDE7DA"/>
+<path d="M0 230 C150 150 300 170 420 200 C560 235 680 150 800 170 V500 H0Z" fill="#6E9E77"/>
+<path d="M0 300 C140 260 260 270 360 250 L360 330 C250 330 120 340 0 350Z" fill="#3C7A5C"/>
+<path d="M440 250 C540 240 660 230 800 260 V350 C680 330 560 330 440 330Z" fill="#3C7A5C"/>
+<rect x="360" y="230" width="80" height="120" fill="#EAF3F2"/>
+<path d="M370 230 v120 M385 230 v120 M400 230 v120 M415 230 v120 M430 230 v120" stroke="#BCD8D6" stroke-width="3"/>
+<path d="M0 350 C200 330 600 330 800 350 V420 C600 400 200 400 0 420Z" fill="#7FB4B4"/>
+<path d="M0 420 C200 400 600 400 800 420 V500 H0Z" fill="#22573F"/>
+<rect x="277" y="449" width="246" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="470" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">ILLUSTRATION · WADI DARBAT</text></svg>

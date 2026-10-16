@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img"><title>Room 2 placeholder</title>
+<rect width="800" height="600" fill="#E5EBE3"/>
+<rect y="430" width="800" height="170" fill="#CDBB9B"/>
+<rect x="470" y="110" width="230" height="180" rx="10" fill="#C9DCCB" stroke="#fff" stroke-width="10"/>
+<path d="M475 250 C540 200 600 215 695 180 V285 H475Z" fill="#3C7A5C" opacity=".8"/>
+<line x1="585" y1="110" x2="585" y2="290" stroke="#fff" stroke-width="6"/>
+<rect x="90" y="230" width="330" height="70" rx="16" fill="#8A6424"/>
+<rect x="70" y="300" width="370" height="140" rx="22" fill="#FBF8F2"/>
+<rect x="110" y="270" width="110" height="50" rx="18" fill="#fff"/>
+<rect x="240" y="270" width="110" height="50" rx="18" fill="#fff"/>
+<rect x="70" y="350" width="370" height="40" fill="#8A6424" opacity=".55"/>
+<rect x="480" y="350" width="70" height="90" rx="8" fill="#8A6424"/>
+<path d="M500 300 h30 l12 50 h-54z" fill="#D4AE6A"/>
+<line x1="515" y1="300" x2="515" y2="350" stroke="#173F31" stroke-width="3"/>
+<rect x="277" y="545" width="246" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="566" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">PHOTO COMING SOON · room 2</text>
+</svg>

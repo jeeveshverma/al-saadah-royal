@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img"><title>Ayn Razat illustration</title>
+<rect width="800" height="500" fill="#E3ECDE"/>
+<path d="M0 260 C200 220 600 220 800 250 V500 H0Z" fill="#8DB48F"/>
+<ellipse cx="400" cy="380" rx="260" ry="60" fill="#7DB7B8"/>
+<ellipse cx="400" cy="372" rx="200" ry="36" fill="#A7D1CF"/>
+<g stroke="#173F31" stroke-width="10" fill="none" stroke-linecap="round">
+  <path d="M150 360 q8-90 0-170"/><path d="M640 350 q-6-80 2-150"/>
+</g>
+<g fill="#22573F">
+  <path d="M150 190 q-70-10-100 30 q50-14 100-12 q-30-50-90-60 q60 0 90 42 q14-56 70-70 q-34 46-50 76 q60-28 110-4 q-64 4-120 28 q66 6 90 54 q-56-34-100-14z"/>
+  <path d="M642 200 q-60-8-86 26 q42-12 86-10 q-26-44-78-52 q52 0 78 36 q12-48 60-60 q-30 40-44 66 q52-24 96-4 q-56 4-104 24 q58 6 78 46 q-48-30-86-12z"/>
+</g>
+<rect x="285" y="449" width="230" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="470" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">ILLUSTRATION · AYN RAZAT</text></svg>

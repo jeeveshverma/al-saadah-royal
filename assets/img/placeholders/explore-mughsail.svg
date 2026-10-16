@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img"><title>Al Mughsail Beach illustration</title>
+<defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE0E3"/><stop offset="1" stop-color="#EEF2EA"/></linearGradient></defs>
+<rect width="800" height="500" fill="url(#s)"/>
+<path d="M0 260 H800 V360 H0Z" fill="#4E9AA8"/>
+<path d="M0 300 q100-14 200 0 t200 0 t200 0 t200 0 V360 H0Z" fill="#6FB3BE"/>
+<path d="M520 120 C600 110 700 130 800 120 V380 H560 C540 300 530 200 520 120Z" fill="#B59D78"/>
+<path d="M560 380 C560 300 600 250 640 230 L800 220 V380Z" fill="#9C8462"/>
+<path d="M0 360 C200 340 420 350 800 370 V500 H0Z" fill="#F3E8D2"/>
+<path d="M590 250 q-8-60 4-110 M594 250 q14-50 4-104 M590 250 q-24-40-16-90" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".9"/>
+<rect x="252" y="449" width="297" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="470" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">ILLUSTRATION · AL MUGHSAIL BEACH</text></svg>

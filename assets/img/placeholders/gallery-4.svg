@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img"><title>Kitchen placeholder</title>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3EBDD"/><stop offset="1" stop-color="#E2D3B8"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#g)"/>
+<circle cx="400" cy="270" r="120" fill="#fff" opacity=".45"/>
+<g transform="translate(316 186) scale(7)" fill="none" stroke="#22573F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M2 11h20M9 7c0-1 1-1.5 1-2.5M13 7c0-1 1-1.5 1-2.5"/></g>
+<rect x="315" y="545" width="171" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="566" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">PHOTO 4 · KITCHEN</text>
+</svg>

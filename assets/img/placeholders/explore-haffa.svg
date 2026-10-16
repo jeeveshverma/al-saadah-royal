@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img"><title>Al Haffa Souq illustration</title>
+<rect width="800" height="500" fill="#F3E8D2"/>
+<rect y="150" width="800" height="270" fill="#E2CCA3"/>
+<g fill="#B88F57">
+  <path d="M60 420 V260 a70 70 0 0 1 140 0 V420Z"/><path d="M250 420 V260 a70 70 0 0 1 140 0 V420Z"/>
+  <path d="M440 420 V260 a70 70 0 0 1 140 0 V420Z"/><path d="M630 420 V260 a70 70 0 0 1 140 0 V420Z"/>
+</g>
+<rect y="130" width="800" height="26" fill="#CDB287"/>
+<rect y="420" width="800" height="80" fill="#D9C29A"/>
+<path d="M330 400 h60 l-8 24 h-44z" fill="#22573F"/>
+<path d="M360 395 q-20-40 6-70 q24-30 0-70" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" opacity=".8"/>
+<rect x="268" y="449" width="263" height="32" rx="16" fill="rgba(255,255,255,.7)"/><text x="400" y="470" text-anchor="middle" font-family="Manrope, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing=".04em" fill="rgba(23,63,49,.75)">ILLUSTRATION · AL HAFFA SOUQ</text></svg>
