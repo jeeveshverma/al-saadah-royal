@@ -18,12 +18,13 @@ window.SITE_CONFIG = {
   siteUrl: "https://jeeveshverma.github.io/al-saadah-royal/",
 
   // true = hide "__" placeholders and show friendly text instead.
-  hidePlaceholders: false,
+  hidePlaceholders: true,
 
   business: {
     name: { en: "Al Saadah Royal Residential Complex", ar: "مجمع السعادة رويال" },
     shortName: { en: "Al Saadah Royal", ar: "السعادة رويال" },
     tagline: { en: "Furnished rooms & studios", ar: "غرف واستوديوهات مفروشة" },
+    district: { en: "South Al Saadah", ar: "السعادة الجنوبية" },
     city: { en: "Salalah", ar: "صلالة" },
     region: { en: "Dhofar", ar: "ظفار" },
     country: { en: "Sultanate of Oman", ar: "سلطنة عُمان" },
@@ -38,17 +39,20 @@ window.SITE_CONFIG = {
     whatsapp: "96898974409",
     whatsappDisplay: "+968 9897 4409",
 
-    // All phone numbers, shown as tap-to-call. The first is the WhatsApp line.
+    // Al Saadah Royal's phone numbers (from the owner's WhatsApp auto-reply), shown as
+    // tap-to-call. The first is the WhatsApp booking line.
+    // (+968 7921 5132 belongs to the sister building — see `sister` below.)
     phones: [
       { tel: "+96898974409", display: "+968 9897 4409", whatsapp: true },
-      { tel: "+96879215132", display: "+968 7921 5132" },
-      { tel: "+96898002774", display: "+968 9800 2774" },
-      { tel: "+96890663784", display: "+968 9066 3784" }
+      { tel: "+96890663784", display: "+968 9066 3784" },
+      { tel: "+96898002774", display: "+968 9800 2774" }
     ],
 
     catalogueUrl: "https://wa.me/c/96898974409",
     mapsUrl: "https://maps.app.goo.gl/iqsjKzkh4NESFzcK8",
-    mapsEmbedQuery: "Al Saadah Royal Residential Complex Salalah",
+    // Exact pin from the Google Maps listing (plus code 3554+GG Salalah).
+    geo: { lat: 17.0587823, lng: 54.1563167 },
+    plusCode: "3554+GG Salalah",
 
     // Unknown for now. Fill in like { en: "2:00 pm", ar: "2:00 مساءً" }.
     checkIn: null,
@@ -57,65 +61,52 @@ window.SITE_CONFIG = {
 
   images: {
     hero: {
-      src: "assets/img/placeholders/hero.svg",
+      src: "assets/img/photos/building.jpg",
       alt: {
-        en: "Green Khareef hills around Salalah (placeholder — replace with a photo of the building)",
-        ar: "تلال خضراء في موسم الخريف حول صلالة (صورة مؤقتة)"
+        en: "Al Saadah Royal Residential Complex — the white stone building with green trim in South Al Saadah, Salalah",
+        ar: "مجمع السعادة رويال السكني — المبنى الحجري الأبيض في السعادة الجنوبية، صلالة"
       }
     }
   },
 
   /*
-   * Rooms & studios. Room types, sizes, beds, guests and prices are NOT known
-   * yet — every null shows as "__". Add, remove or reorder rooms freely.
+   * Rooms & studios — the two unit types listed in the owner's WhatsApp catalogue:
+   * "( غرفه ودورة مياه ومطبخ تحظيري ) ( غرفه ودورة مياه )", rented daily and monthly,
+   * with water, electricity, internet, parking, regular cleaning and a reception desk.
+   * Sizes, beds, guests and prices are NOT known yet (null) — fill them in when Khaleel sends them.
    *   priceFrom: number in OMR per night, e.g. 25
    *   size:      text, e.g. { en: "35 m²", ar: "35 م²" }
    *   beds:      text, e.g. { en: "1 king bed", ar: "سرير كبير" }
    *   guests:    number, e.g. 2
-   *   amenities: icon names from the list at the top (confirm with the owner)
    */
   rooms: [
-    {
-      id: "room",
-      name: { en: "Furnished Room", ar: "غرفة مفروشة" },
-      description: {
-        en: "A comfortable furnished room for short and longer stays in Salalah.",
-        ar: "غرفة مفروشة مريحة للإقامات القصيرة والطويلة في صلالة."
-      },
-      photo: "assets/img/placeholders/room-1.svg",
-      size: null,
-      beds: null,
-      guests: null,
-      priceFrom: null,
-      amenities: ["bed", "wifi", "ac"] // TODO: confirm with owner
-    },
     {
       id: "studio",
       name: { en: "Furnished Studio", ar: "استوديو مفروش" },
       description: {
-        en: "An open-plan furnished studio with space to settle in for a few days or a whole season.",
-        ar: "استوديو مفروش بمساحة مفتوحة، مناسب لإقامة أيام قليلة أو موسم كامل."
+        en: "A furnished room with its own bathroom and a kitchenette — for daily or monthly stays.",
+        ar: "غرفة مفروشة مع دورة مياه خاصة ومطبخ تحضيري — للإيجار اليومي أو الشهري."
       },
       photo: "assets/img/placeholders/room-2.svg",
       size: null,
       beds: null,
       guests: null,
       priceFrom: null,
-      amenities: ["bed", "kitchen", "wifi", "ac"] // TODO: confirm with owner
+      amenities: ["bed", "bath", "kitchen", "wifi", "parking"]
     },
     {
-      id: "studio-1br",
-      name: { en: "Studio · 1 bedroom", ar: "استوديو · غرفة نوم واحدة" },
+      id: "room",
+      name: { en: "Furnished Room", ar: "غرفة مفروشة" },
       description: {
-        en: "A larger furnished unit with a separate bedroom — room for the whole family.",
-        ar: "وحدة مفروشة أكبر مع غرفة نوم منفصلة — مساحة تتسع للعائلة."
+        en: "A furnished room with its own bathroom — for daily or monthly stays.",
+        ar: "غرفة مفروشة مع دورة مياه خاصة — للإيجار اليومي أو الشهري."
       },
-      photo: "assets/img/placeholders/room-3.svg",
+      photo: "assets/img/placeholders/room-1.svg",
       size: null,
       beds: null,
       guests: null,
       priceFrom: null,
-      amenities: ["bed", "sofa", "kitchen", "wifi"] // TODO: confirm with owner
+      amenities: ["bed", "bath", "wifi", "parking"]
     }
   ],
 
@@ -123,40 +114,40 @@ window.SITE_CONFIG = {
   // delete any that do not apply.
   features: [
     {
-      icon: "family",
-      title: { en: "Family-friendly", ar: "مناسب للعائلات" },
-      text: { en: "Private, quiet units that suit families travelling together.", ar: "وحدات خاصة وهادئة تناسب العائلات المسافرة معاً." }
-    },
-    {
       icon: "sofa",
       title: { en: "Fully furnished", ar: "مفروشة بالكامل" },
-      text: { en: "Move in with just your suitcase — everything is ready.", ar: "ادخل بحقيبتك فقط — كل شيء جاهز لإقامتك." }
+      text: { en: "Rooms and studios ready to move into — just bring your suitcase.", ar: "غرف واستوديوهات جاهزة للسكن — أحضر حقيبتك فقط." }
     },
     {
-      icon: "kitchen",
-      title: { en: "Kitchen", ar: "مطبخ" },
-      text: { en: "Cook your own meals and keep to your family's routine.", ar: "حضّر وجباتك بنفسك وحافظ على روتين عائلتك." }
-    },
-    {
-      icon: "wifi",
-      title: { en: "Wi-Fi", ar: "إنترنت واي فاي" },
-      text: { en: "Stay connected for work, school and video calls home.", ar: "ابقَ على اتصال للعمل والدراسة ومكالمات الأهل." }
+      icon: "bolt",
+      title: { en: "Water, electricity & internet included", ar: "الماء والكهرباء والإنترنت مشمولة" },
+      text: { en: "No extra bills: utilities and Wi-Fi come with every stay.", ar: "لا فواتير إضافية: الخدمات والإنترنت مشمولة في كل إقامة." }
     },
     {
       icon: "parking",
       title: { en: "Parking", ar: "مواقف سيارات" },
-      text: { en: "Arrive by car and park close to your door.", ar: "تعال بسيارتك واركنها بالقرب من مدخلك." }
+      text: { en: "Park in the paved courtyard right by the building.", ar: "مواقف في الساحة المرصوفة بجانب المبنى." }
     },
     {
-      icon: "mountain",
-      title: { en: "Close to Khareef attractions", ar: "قريب من معالم الخريف" },
-      text: { en: "A convenient base for the beaches, wadis and springs of Dhofar.", ar: "قاعدة مريحة لزيارة شواطئ وأودية وعيون ظفار." }
+      icon: "sparkle",
+      title: { en: "Regular cleaning", ar: "نظافة دورية" },
+      text: { en: "Housekeeping keeps your room fresh during your stay.", ar: "خدمة تنظيف دورية طوال فترة إقامتك." }
+    },
+    {
+      icon: "bell",
+      title: { en: "Reception desk", ar: "مكتب استقبال" },
+      text: { en: "Someone on site to welcome you and help with anything you need.", ar: "فريق في الموقع لاستقبالك ومساعدتك في كل ما تحتاجه." }
+    },
+    {
+      icon: "calendar",
+      title: { en: "Daily & monthly stays", ar: "إيجار يومي وشهري" },
+      text: { en: "Stay a night, a week, or the whole Khareef season.", ar: "ليلة أو أسبوع أو موسم الخريف كاملاً." }
     }
   ],
 
   // Gallery photos. Replace placeholders with real photos (see assets/img/README.md).
   gallery: [
-    { src: "assets/img/placeholders/gallery-1.svg", alt: { en: "Building exterior (placeholder)", ar: "واجهة المبنى (صورة مؤقتة)" } },
+    { src: "assets/img/photos/building.jpg", alt: { en: "The building and its paved courtyard", ar: "المبنى والساحة المرصوفة" } },
     { src: "assets/img/placeholders/gallery-2.svg", alt: { en: "Bedroom (placeholder)", ar: "غرفة النوم (صورة مؤقتة)" } },
     { src: "assets/img/placeholders/gallery-3.svg", alt: { en: "Living area (placeholder)", ar: "غرفة المعيشة (صورة مؤقتة)" } },
     { src: "assets/img/placeholders/gallery-4.svg", alt: { en: "Kitchen (placeholder)", ar: "المطبخ (صورة مؤقتة)" } },
@@ -202,6 +193,27 @@ window.SITE_CONFIG = {
     }
   ],
 
+  /*
+   * Sister property from the same owner (from the WhatsApp auto-reply and catalogue).
+   * Set `sister: null` to hide the section.
+   * Note: the catalogue item's map link points to "بناية وادي الريم"; the auto-reply's link
+   * (used here) points to "بناية الخليل شقق مفروشة" — confirm which is right with Khaleel.
+   */
+  sister: {
+    name: { en: "Al Khaleel Building", ar: "بناية الخليل" },
+    tagline: { en: "Furnished apartments for monthly rent", ar: "شقق مفروشة للإيجار الشهري" },
+    description: {
+      en: "Clean two-bedroom apartments with a living room, two bathrooms and a kitchen. Regular cleaning, parking, reception and a lift.",
+      ar: "شقق نظيفة بغرفتي نوم وصالة ودورتي مياه ومطبخ، مع نظافة دورية ومواقف سيارات ومكتب استقبال ومصعد."
+    },
+    photo: "assets/img/photos/khaleel-1.jpg",
+    priceMonthly: 110,
+    priceWas: 120,
+    priceNote: { en: "/ month · water, electricity & internet included", ar: "/ شهرياً · شامل الماء والكهرباء والإنترنت" },
+    phone: { tel: "+96879215132", display: "+968 7921 5132" },
+    mapsUrl: "https://maps.app.goo.gl/Qksn8izPsFQ8hQYR7"
+  },
+
   // Website credit in the footer.
   credit: { name: "Jeevesh Verma", url: "https://jeeveshverma.github.io/castlestaramman/" },
 
@@ -211,7 +223,7 @@ window.SITE_CONFIG = {
   text: {
     en: {
       "meta.title": "Al Saadah Royal | Furnished apartments & studios in Salalah",
-      "meta.description": "Al Saadah Royal Residential Complex: furnished rooms and studios in Salalah, Oman. Family-friendly, rated 4.4 on Google. Book direct on WhatsApp +968 9897 4409.",
+      "meta.description": "Al Saadah Royal Residential Complex: furnished rooms and studios in South Al Saadah, Salalah, Oman. Daily and monthly stays, utilities and Wi-Fi included, rated 4.4 on Google. Book on WhatsApp +968 9897 4409.",
 
       "skip": "Skip to content",
       "nav.rooms": "Rooms",
@@ -226,7 +238,7 @@ window.SITE_CONFIG = {
 
       "hero.eyebrow": "Salalah · Dhofar · Oman",
       "hero.title": "Furnished rooms & studios in the heart of Salalah",
-      "hero.lead": "Comfortable, fully furnished stays for families and long-stay guests — book directly with us on WhatsApp.",
+      "hero.lead": "Furnished rooms and studios in South Al Saadah for daily and monthly stays — water, electricity, internet and parking included. Book directly with us on WhatsApp.",
       "hero.cta1": "Check availability on WhatsApp",
       "hero.cta2": "View photos",
       "hero.rating": "on Google",
@@ -234,7 +246,7 @@ window.SITE_CONFIG = {
 
       "rooms.eyebrow": "Rooms & studios",
       "rooms.title": "Find the right space for your stay",
-      "rooms.lead": "Every unit is furnished and ready to move into. Send us your dates on WhatsApp for the best rate.",
+      "rooms.lead": "Two types of furnished unit, each with its own bathroom, for daily or monthly rent. Send us your dates on WhatsApp for the rate.",
       "room.from": "From",
       "room.perNight": "/ night",
       "room.currency": "OMR",
@@ -271,7 +283,7 @@ window.SITE_CONFIG = {
 
       "why.eyebrow": "Why stay with us",
       "why.title": "A home base for your Salalah trip",
-      "why.lead": "Everything a family needs for a relaxed stay in Dhofar.",
+      "why.lead": "Everything included, so you can simply settle in.",
 
       "gallery.eyebrow": "Gallery",
       "gallery.title": "Take a look around",
@@ -287,7 +299,7 @@ window.SITE_CONFIG = {
 
       "location.eyebrow": "Location",
       "location.title": "Find us in Salalah",
-      "location.lead": "We're in Salalah, Dhofar Governorate. Open the map for directions straight to our door.",
+      "location.lead": "We're in South Al Saadah, a residential area of Salalah close to everyday services. Open the map for directions straight to our door.",
       "location.open": "Open in Google Maps",
       "location.mapTitle": "Map showing Al Saadah Royal Residential Complex in Salalah",
 
@@ -303,6 +315,15 @@ window.SITE_CONFIG = {
       "contact.tbd": "__",
 
       "footer.rights": "All rights reserved.",
+
+      "sister.eyebrow": "Also from Al Khaleel",
+      "sister.title": "Need a bigger apartment?",
+      "sister.lead": "Our sister building has two-bedroom apartments for families and monthly stays.",
+      "sister.was": "was",
+      "sister.call": "Call",
+      "sister.map": "Map",
+      "sister.wa": "Ask on WhatsApp",
+      "wa.sister": "Hello, I'm interested in a two-bedroom apartment at Al Khaleel Building for monthly rent.\nMove-in date: \nNumber of people: ",
       "footer.credit": "Website by",
 
       "float.label": "Book on WhatsApp",
@@ -314,7 +335,7 @@ window.SITE_CONFIG = {
 
     ar: {
       "meta.title": "السعادة رويال | شقق واستوديوهات مفروشة في صلالة",
-      "meta.description": "مجمع السعادة رويال: غرف واستوديوهات مفروشة في صلالة، سلطنة عُمان. مناسب للعائلات، تقييم 4.4 على جوجل. احجز مباشرة عبر واتساب ‎+968 9897 4409.",
+      "meta.description": "مجمع السعادة رويال السكني: غرف واستوديوهات مفروشة في السعادة الجنوبية، صلالة. إيجار يومي وشهري، شامل الماء والكهرباء والإنترنت، تقييم 4.4 على جوجل. احجز عبر واتساب ‎+968 9897 4409.",
 
       "skip": "انتقل إلى المحتوى",
       "nav.rooms": "الغرف",
@@ -329,7 +350,7 @@ window.SITE_CONFIG = {
 
       "hero.eyebrow": "صلالة · ظفار · عُمان",
       "hero.title": "غرف واستوديوهات مفروشة في قلب صلالة",
-      "hero.lead": "إقامة مريحة ومفروشة بالكامل للعائلات والإقامات الطويلة — احجز معنا مباشرة عبر واتساب.",
+      "hero.lead": "غرف واستوديوهات مفروشة في السعادة الجنوبية للإيجار اليومي والشهري — شامل الماء والكهرباء والإنترنت ومواقف السيارات. احجز معنا مباشرة عبر واتساب.",
       "hero.cta1": "تحقق من التوفر عبر واتساب",
       "hero.cta2": "شاهد الصور",
       "hero.rating": "على جوجل",
@@ -337,7 +358,7 @@ window.SITE_CONFIG = {
 
       "rooms.eyebrow": "الغرف والاستوديوهات",
       "rooms.title": "اختر المساحة المناسبة لإقامتك",
-      "rooms.lead": "كل الوحدات مفروشة وجاهزة للسكن. أرسل لنا تواريخك عبر واتساب لأفضل سعر.",
+      "rooms.lead": "نوعان من الوحدات المفروشة، كل منها بدورة مياه خاصة، للإيجار اليومي أو الشهري. أرسل لنا تواريخك عبر واتساب لمعرفة السعر.",
       "room.from": "ابتداءً من",
       "room.perNight": "/ لليلة",
       "room.currency": "ر.ع.",
@@ -373,7 +394,7 @@ window.SITE_CONFIG = {
 
       "why.eyebrow": "لماذا تقيم معنا",
       "why.title": "مقرّك المريح خلال رحلتك إلى صلالة",
-      "why.lead": "كل ما تحتاجه العائلة لإقامة هادئة في ظفار.",
+      "why.lead": "كل شيء مشمول، لتستقر براحة.",
 
       "gallery.eyebrow": "معرض الصور",
       "gallery.title": "ألقِ نظرة",
@@ -389,7 +410,7 @@ window.SITE_CONFIG = {
 
       "location.eyebrow": "الموقع",
       "location.title": "موقعنا في صلالة",
-      "location.lead": "نحن في صلالة، محافظة ظفار. افتح الخريطة للحصول على الاتجاهات حتى باب المجمع.",
+      "location.lead": "نحن في السعادة الجنوبية، منطقة سكنية في صلالة قريبة من جميع الخدمات. افتح الخريطة للحصول على الاتجاهات حتى باب المجمع.",
       "location.open": "افتح في خرائط جوجل",
       "location.mapTitle": "خريطة توضح موقع مجمع السعادة رويال في صلالة",
 
@@ -405,6 +426,15 @@ window.SITE_CONFIG = {
       "contact.tbd": "__",
 
       "footer.rights": "جميع الحقوق محفوظة.",
+
+      "sister.eyebrow": "أيضاً من الخليل",
+      "sister.title": "تحتاج شقة أكبر؟",
+      "sister.lead": "في بنايتنا الشقيقة شقق بغرفتي نوم للعائلات والإيجار الشهري.",
+      "sister.was": "بدلاً من",
+      "sister.call": "اتصل",
+      "sister.map": "الخريطة",
+      "sister.wa": "استفسر عبر واتساب",
+      "wa.sister": "مرحباً، أرغب في الاستفسار عن شقة بغرفتي نوم في بناية الخليل للإيجار الشهري.\nتاريخ الدخول: \nعدد الأشخاص: ",
       "footer.credit": "تصميم الموقع:",
 
       "float.label": "احجز عبر واتساب",

@@ -95,7 +95,7 @@
       var key = node.getAttribute("data-biz");
       var value;
       if (key === "address") {
-        value = [L(BIZ.city), L(BIZ.region), L(BIZ.country)].join(lang === "ar" ? "، " : ", ");
+        value = [L(BIZ.district), L(BIZ.city), L(BIZ.region), L(BIZ.country)].filter(Boolean).join(lang === "ar" ? "، " : ", ");
       } else if (key === "googleRating") {
         value = BIZ.googleRating.toFixed(1);
       } else {
@@ -129,8 +129,8 @@
     });
 
     var map = $("#map-iframe");
-    var mapSrc = "https://www.google.com/maps?q=" + encodeURIComponent(BIZ.mapsEmbedQuery) +
-      "&hl=" + lang + "&output=embed";
+    var mapSrc = "https://maps.google.com/maps?q=" + BIZ.geo.lat + "," + BIZ.geo.lng +
+      "&z=16&hl=" + lang + "&output=embed";
     if (map.getAttribute("src") !== mapSrc) map.setAttribute("src", mapSrc);
 
     $("#credit-link").href = CFG.credit.url;
@@ -352,6 +352,32 @@
     });
   }
 
+  // ---------- sister property ----------
+  function renderSister() {
+    var section = $("#sister");
+    var sp = CFG.sister;
+    if (!sp) { section.hidden = true; return; }
+    section.hidden = false;
+    $("#sister-name").textContent = L(sp.name) + " · " + L(sp.tagline);
+    $("#sister-desc").textContent = L(sp.description);
+    var img = $("#sister-img");
+    img.src = sp.photo;
+    img.alt = L(sp.name);
+    var price = $("#sister-price");
+    price.textContent = "";
+    if (sp.priceMonthly) {
+      price.appendChild(el("strong", { text: t("room.currency") + " " + sp.priceMonthly }));
+      if (sp.priceWas) {
+        price.appendChild(el("s", { text: t("room.currency") + " " + sp.priceWas, "aria-label": t("sister.was") + " " + sp.priceWas }));
+      }
+      price.appendChild(document.createTextNode(" " + L(sp.priceNote)));
+    }
+    $("#sister-wa").href = waLink(t("wa.sister"));
+    $("#sister-call").href = "tel:" + sp.phone.tel;
+    $("#sister-phone").textContent = sp.phone.display.replace(/ /g, "\u00A0");
+    $("#sister-map").href = sp.mapsUrl;
+  }
+
   // ---------- booking form ----------
   var form = $("#booking-form");
   var fIn = $("#f-checkin"), fOut = $("#f-checkout"), fGuests = $("#f-guests"), fRoom = $("#f-room"), fName = $("#f-name");
@@ -489,11 +515,13 @@
       "telephone": BIZ.phones[0].tel,
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": BIZ.district.en,
         "addressLocality": BIZ.city.en,
         "addressRegion": BIZ.region.en,
         "addressCountry": BIZ.countryCode
       },
       "hasMap": BIZ.mapsUrl,
+      "geo": { "@type": "GeoCoordinates", "latitude": BIZ.geo.lat, "longitude": BIZ.geo.lng },
       "availableLanguage": ["English", "Arabic"],
       "contactPoint": BIZ.phones.map(function (p) {
         return { "@type": "ContactPoint", "telephone": p.tel, "contactType": "reservations", "availableLanguage": ["English", "Arabic"] };
@@ -538,6 +566,7 @@
     renderGallery();
     renderExplore();
     renderContact();
+    renderSister();
     populateFormOptions();
     refreshFormErrors();
     observeReveals();
