@@ -49,7 +49,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Manrope:wght@400;500;600;700&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Manrope:wght@400;500;600;700&amp;family=Tajawal:wght@400;500;700;800&amp;display=swap"></noscript>
-<link rel="preload" as="image" href="assets/img/photos/building.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/photos/building.jpg" imagesrcset="assets/img/photos/building-sm.jpg 700w, assets/img/photos/building.jpg 845w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="site-config.js" defer></script>
 <script src="assets/js/main.js" defer></script>
@@ -133,10 +133,10 @@
 
   <!-- 2. Hero -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-media">
-      <img id="hero-img" src="assets/img/photos/building.jpg" alt="Al Saadah Royal Residential Complex — the white stone building with green trim in South Al Saadah, Salalah" width="845" height="999" fetchpriority="high" decoding="async">
+    <div class="hero-media" id="hero-media">
+      <img id="hero-img" class="hero-slide is-active" src="assets/img/photos/building.jpg" srcset="assets/img/photos/building-sm.jpg 700w, assets/img/photos/building.jpg 845w" sizes="100vw" alt="Al Saadah Royal Residential Complex — the white stone building with green trim in South Al Saadah, Salalah" width="845" height="999" fetchpriority="high" decoding="async">
     </div>
-    <div class="container hero-content">
+    <div class="container hero-content hero-enter">
       <p class="eyebrow eyebrow-light" data-i18n="hero.eyebrow">Salalah · Dhofar · Oman</p>
       <h1 id="hero-title" data-i18n="hero.title">Furnished rooms &amp; studios in the heart of Salalah</h1>
       <p class="hero-lead" data-i18n="hero.lead">Furnished rooms and studios in South Al Saadah for daily and monthly stays — water, electricity, internet and parking included. Book directly with us on WhatsApp.</p>
@@ -150,7 +150,7 @@
       </div>
       <a class="rating-badge" id="rating-badge" href="https://maps.app.goo.gl/iqsjKzkh4NESFzcK8" target="_blank" rel="noopener">
         <span class="g-logo" aria-hidden="true">G</span>
-        <span class="rating-num" data-biz="googleRating">4.4</span>
+        <span class="rating-num" data-count="4.4" data-decimals="1">4.4</span>
         <span class="stars" aria-hidden="true">
           <span class="star"><svg class="star-bg"><use href="#i-star"/></svg><svg class="star-fg"><use href="#i-star"/></svg></span><span class="star"><svg class="star-bg"><use href="#i-star"/></svg><svg class="star-fg"><use href="#i-star"/></svg></span><span class="star"><svg class="star-bg"><use href="#i-star"/></svg><svg class="star-fg"><use href="#i-star"/></svg></span><span class="star"><svg class="star-bg"><use href="#i-star"/></svg><svg class="star-fg"><use href="#i-star"/></svg></span><span class="star star-partial"><svg class="star-bg"><use href="#i-star"/></svg><svg class="star-fg"><use href="#i-star"/></svg></span>
         </span>
@@ -233,8 +233,33 @@
     </div>
   </section>
 
+  <!-- Guest reviews (from site-config.js `reviews`) -->
+  <section class="section section-tint reviews-section" id="reviews" aria-labelledby="reviews-title">
+    <div class="container">
+      <div class="section-head section-head-row">
+        <div>
+          <p class="eyebrow" data-i18n="reviews.eyebrow">Guest reviews</p>
+          <h2 id="reviews-title" data-i18n="reviews.title">What our guests say</h2>
+        </div>
+        <a class="score" id="reviews-score" href="https://maps.app.goo.gl/iqsjKzkh4NESFzcK8" target="_blank" rel="noopener">
+          <span class="score-num" data-count="4.4" data-decimals="1">4.4</span>
+          <span class="score-meta">
+            <span class="stars score-stars" aria-hidden="true"></span>
+            <span class="score-count" id="reviews-count">13 Google reviews</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="marquee" id="reviews-marquee">
+      <ul class="marquee-track" id="reviews-list"></ul>
+    </div>
+    <div class="container reviews-foot">
+      <a class="btn btn-outline" id="reviews-all" href="https://maps.app.goo.gl/iqsjKzkh4NESFzcK8" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="reviews.all">Read all reviews on Google</span></a>
+    </div>
+  </section>
+
   <!-- 6. Gallery -->
-  <section class="section section-tint" id="gallery" aria-labelledby="gallery-title">
+  <section class="section" id="gallery" aria-labelledby="gallery-title">
     <div class="container">
       <div class="section-head section-head-row">
         <div>
@@ -250,7 +275,7 @@
   </section>
 
   <!-- 7. Explore Salalah -->
-  <section class="section" id="explore" aria-labelledby="explore-title">
+  <section class="section section-tint" id="explore" aria-labelledby="explore-title">
     <div class="container">
       <div class="section-head">
         <p class="eyebrow" data-i18n="explore.eyebrow">Explore Salalah</p>
@@ -263,6 +288,10 @@
 
   <!-- 8. Location -->
   <section class="section section-green" id="location" aria-labelledby="location-title">
+    <svg class="garland" viewBox="0 0 1200 90" preserveAspectRatio="xMidYMin slice" aria-hidden="true" focusable="false">
+      <path d="M0 8 Q150 70 300 14 T600 14 T900 14 T1200 8" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.2"/>
+      <g class="bulbs"></g>
+    </svg>
     <div class="container location">
       <div class="location-copy">
         <p class="eyebrow eyebrow-light" data-i18n="location.eyebrow">Location</p>

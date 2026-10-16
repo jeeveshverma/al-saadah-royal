@@ -75,8 +75,8 @@ ul { padding: 0; margin: 0; list-style: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .noscript { padding: 16px; background: var(--sand-100); border-radius: var(--radius-sm); }
 
-/* Hide Arabic content until main.js has swapped the text (fallback reveals anyway). */
-html.i18n-pending body { animation: reveal 0s linear 1.2s forwards; opacity: 0; }
+/* Hide the English text of an Arabic visit until main.js has swapped it (fallback reveals anyway); photos still paint at once. */
+html.i18n-pending [data-i18n] { animation: reveal 0s linear 1.2s forwards; opacity: 0; }
 @keyframes reveal { to { opacity: 1; } }
 
 /* ---------- type ---------- */
@@ -196,6 +196,28 @@ html[lang="ar"] .lang-toggle span { font-family: "Manrope", system-ui, sans-seri
 .hero { position: relative; isolation: isolate; color: #fff; min-height: min(92svh, 760px); display: flex; align-items: flex-end; overflow: hidden; }
 .hero-media { position: absolute; inset: 0; z-index: -1; background: var(--green-900); }
 .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 35%; }
+/* Hero slideshow: slow cross-fade with a gentle "Ken Burns" zoom on the active slide. */
+.hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease; will-change: opacity, transform; }
+.hero-slide.is-active { opacity: 1; }
+/* The zoom starts once the page has loaded (main.js adds .kb), so the first paint is not delayed. */
+.hero-slide.is-active.kb { animation: kenburns 9s ease-out both; }
+@keyframes kenburns { from { transform: scale(1.12); } to { transform: scale(1.0); } }
+/* Hero text rises in, line by line. */
+.hero-enter > * { opacity: 0; transform: translateY(22px); animation: rise .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+.hero-enter > *:nth-child(1) { animation-delay: .15s; }
+.hero-enter > *:nth-child(2) { animation-delay: .3s; }
+.hero-enter > *:nth-child(3) { animation-delay: .5s; }
+.hero-enter > *:nth-child(4) { animation-delay: .7s; }
+.hero-enter > *:nth-child(5) { animation-delay: .9s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+/* Scroll hint */
+.hero::after {
+  content: ""; position: absolute; left: 50%; bottom: 18px; width: 22px; height: 36px; margin-left: -11px;
+  border: 2px solid rgba(255, 255, 255, .6); border-radius: 12px; opacity: .8;
+  background: linear-gradient(#fff, #fff) center 8px / 2px 7px no-repeat; animation: scrollhint 2s ease-in-out infinite;
+}
+@keyframes scrollhint { 0%, 100% { background-position: center 8px; } 50% { background-position: center 18px; } }
+@media (max-width: 559px) { .hero::after { display: none; } }
 .hero-media::after {
   content: ""; position: absolute; inset: 0;
   background:
@@ -237,8 +259,20 @@ html[dir="rtl"] .star-fg { clip-path: inset(0 0 0 calc(100% - var(--fill, 100%))
 /* ---------- rooms ---------- */
 .rooms-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); max-width: 980px; }
 .room-card { display: flex; flex-direction: column; overflow: hidden; }
-.room-photo { position: relative; aspect-ratio: 4 / 3; background: var(--sand-200); }
+.room-photo { position: relative; aspect-ratio: 4 / 3.4; background: var(--sand-200); }
 .room-photo img { width: 100%; height: 100%; object-fit: cover; }
+.room-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.room-track::-webkit-scrollbar { display: none; }
+.room-track img { flex: 0 0 100%; scroll-snap-align: start; }
+.room-tags { position: absolute; inset-block-start: 14px; inset-inline-start: 14px; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .95); color: var(--green-900); font-size: 13px; font-weight: 700; box-shadow: var(--shadow-sm); }
+.tag svg { width: 15px; height: 15px; color: var(--gold-text); }
+.photo-count { position: absolute; inset-block-end: 12px; inset-inline-end: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 999px; background: rgba(14, 42, 32, .7); color: #fff; font-size: 12.5px; font-weight: 700; }
+.photo-count svg { width: 14px; height: 14px; }
+.dots { position: absolute; inset-block-end: 6px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+.dot { width: 26px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.dot::before { content: ""; width: 8px; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, .65); box-shadow: 0 1px 3px rgba(0, 0, 0, .3); transition: width .3s, background-color .3s; }
+.dot.on::before { width: 22px; background: #fff; }
 .price-tag {
   position: absolute; inset-block-end: 14px; inset-inline-start: 14px;
   background: rgba(255, 255, 255, .96); border-radius: 999px; padding: 6px 14px;
@@ -385,6 +419,35 @@ html[dir="rtl"] .lb-next svg { transform: scaleX(-1); }
 .times dt svg { width: 18px; height: 18px; color: var(--green-500); }
 .times dd { margin: 0; color: var(--muted); }
 
+/* ---------- reviews ---------- */
+.score { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; color: var(--ink); background: var(--white); border: 1px solid var(--line); border-radius: 18px; padding: 12px 18px; box-shadow: var(--shadow-sm); }
+.score:hover { color: var(--ink); border-color: var(--green-500); }
+.score-num { font-family: var(--display); font-size: 46px; line-height: 1; color: var(--green-900); }
+html[lang="ar"] .score-num { font-family: "DM Serif Display", Georgia, serif; }
+.score-meta { display: grid; gap: 4px; }
+.score-stars .star, .score-stars .star svg { width: 18px; height: 18px; }
+.score-count { font-size: 14px; font-weight: 600; color: var(--muted); }
+.marquee { overflow: hidden; padding: 8px 0 18px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.marquee-track { display: flex; gap: 18px; width: max-content; animation: marquee 60s linear infinite; padding-inline: 18px; }
+html[dir="rtl"] .marquee-track { animation-name: marquee-rtl; }
+.marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes marquee-rtl { to { transform: translateX(50%); } }
+.review { width: min(84vw, 360px); flex: none; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 20px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-sm); }
+.review .stars .star, .review .stars .star svg { width: 16px; height: 16px; }
+.review blockquote { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.6; flex: 1; }
+.review blockquote::before { content: "\201C"; display: block; font-family: "DM Serif Display", Georgia, serif; font-size: 44px; line-height: .6; color: var(--gold); margin-bottom: 6px; }
+.review footer { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--green-900); color: var(--gold-light); font-weight: 800; flex: none; }
+.review-name { font-weight: 700; color: var(--ink); display: block; }
+.review-meta { color: var(--muted); font-size: 12.5px; }
+.reviews-foot { margin-top: 18px; }
+
+/* ---------- string-light garland (Location) ---------- */
+.garland { position: absolute; top: 0; left: 0; width: 100%; height: 70px; pointer-events: none; }
+.garland circle { fill: #FFD98A; filter: drop-shadow(0 0 4px rgba(255, 217, 138, .9)); animation: twinkle 3.2s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
 /* ---------- sister property ---------- */
 .sister { display: grid; overflow: hidden; max-width: 980px; }
 @media (min-width: 760px) { .sister { grid-template-columns: 0.9fr 1.1fr; } }
@@ -436,11 +499,30 @@ html[dir="rtl"] .footer-name-ar { text-align: right; }
 @keyframes pulse { 0% { opacity: .8; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.35); } }
 
 /* ---------- reveal on scroll ---------- */
-.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.js .reveal { opacity: 0; transform: translateY(26px) scale(.98); transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--delay, 0s); }
+/* Section headings slide in too. */
+.js .section-head.reveal { transform: translateY(18px); }
+/* Feature icons wiggle once on hover. */
+.feature:hover .feature-icon { animation: pop .5s ease; }
+@keyframes pop { 40% { transform: scale(1.12) rotate(-6deg); } 70% { transform: scale(.96) rotate(3deg); } }
+/* A soft shine sweeps across WhatsApp buttons on hover. */
+.btn-wa { position: relative; overflow: hidden; }
+.btn-wa::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .35), transparent); transform: skewX(-20deg); transition: left .6s ease; }
+.btn-wa:hover::after { left: 120%; }
+/* Room photos zoom gently on hover. */
+.room-photo { overflow: hidden; }
+.room-photo img { transition: transform .8s ease; }
+.room-card:hover .room-photo img { transform: scale(1.05); }
+.room-card { transition: transform .3s ease, box-shadow .3s ease; }
+.room-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .js .reveal.in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .js .reveal { opacity: 1; transform: none; }
+  .hero-enter > * { opacity: 1; transform: none; }
+  .hero-slide.is-active.kb { animation: none; }
+  .marquee { overflow-x: auto; }
+  .marquee-track { animation: none; }
 }

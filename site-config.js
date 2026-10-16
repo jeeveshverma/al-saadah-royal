@@ -30,10 +30,9 @@ window.SITE_CONFIG = {
     country: { en: "Sultanate of Oman", ar: "سلطنة عُمان" },
     countryCode: "OM",
 
-    // Google rating. reviewCount is unknown: put the number of Google reviews
-    // here (e.g. 37). The structured-data rating is only published once it is set.
+    // Google rating and number of Google reviews (checked 16 Oct 2026). Update both together.
     googleRating: 4.4,
-    reviewCount: null,
+    reviewCount: 13,
 
     // WhatsApp booking number (digits only, with country code) + how it is shown.
     whatsapp: "96898974409",
@@ -60,6 +59,11 @@ window.SITE_CONFIG = {
   },
 
   images: {
+    // The hero cross-fades through these slides (first one loads first).
+    heroSlides: [
+      { src: "assets/img/photos/building.jpg", alt: { en: "The building by day", ar: "المبنى نهاراً" } },
+      { src: "assets/img/photos/night.jpg", alt: { en: "The courtyard at night under string lights", ar: "الساحة ليلاً تحت الأضواء" } }
+    ],
     hero: {
       src: "assets/img/photos/building.jpg",
       alt: {
@@ -87,7 +91,8 @@ window.SITE_CONFIG = {
         en: "A furnished room with its own bathroom and a kitchenette — for daily or monthly stays.",
         ar: "غرفة مفروشة مع دورة مياه خاصة ومطبخ تحضيري — للإيجار اليومي أو الشهري."
       },
-      photo: "assets/img/placeholders/room-2.svg",
+      photo: "assets/img/photos/studio.jpg",
+      photos: ["assets/img/photos/studio-sm.jpg", "assets/img/photos/bath-1-sm.jpg"],
       size: null,
       beds: null,
       guests: null,
@@ -101,7 +106,8 @@ window.SITE_CONFIG = {
         en: "A furnished room with its own bathroom — for daily or monthly stays.",
         ar: "غرفة مفروشة مع دورة مياه خاصة — للإيجار اليومي أو الشهري."
       },
-      photo: "assets/img/placeholders/room-1.svg",
+      photo: "assets/img/photos/room.jpg",
+      photos: ["assets/img/photos/room-sm.jpg", "assets/img/photos/bath-2-sm.jpg"],
       size: null,
       beds: null,
       guests: null,
@@ -145,16 +151,66 @@ window.SITE_CONFIG = {
     }
   ],
 
-  // Gallery photos. Replace placeholders with real photos (see assets/img/README.md).
+  // Gallery photos: `src` opens in the lightbox, `thumb` (700 px, made by tools/make_thumbs.sh) fills the grid.
   gallery: [
-    { src: "assets/img/photos/building.jpg", alt: { en: "The building and its paved courtyard", ar: "المبنى والساحة المرصوفة" } },
-    { src: "assets/img/placeholders/gallery-2.svg", alt: { en: "Bedroom (placeholder)", ar: "غرفة النوم (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-3.svg", alt: { en: "Living area (placeholder)", ar: "غرفة المعيشة (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-4.svg", alt: { en: "Kitchen (placeholder)", ar: "المطبخ (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-5.svg", alt: { en: "Bathroom (placeholder)", ar: "الحمام (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-6.svg", alt: { en: "Studio (placeholder)", ar: "الاستوديو (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-7.svg", alt: { en: "Entrance & reception (placeholder)", ar: "المدخل والاستقبال (صورة مؤقتة)" } },
-    { src: "assets/img/placeholders/gallery-8.svg", alt: { en: "Parking area (placeholder)", ar: "مواقف السيارات (صورة مؤقتة)" } }
+    { src: "assets/img/photos/building.jpg", thumb: "assets/img/photos/building-sm.jpg", alt: { en: "The building and its paved courtyard", ar: "المبنى والساحة المرصوفة" } },
+    { src: "assets/img/photos/night.jpg", thumb: "assets/img/photos/night-sm.jpg", alt: { en: "The courtyard at night under string lights", ar: "الساحة ليلاً تحت الأضواء" } },
+    { src: "assets/img/photos/studio.jpg", thumb: "assets/img/photos/studio-sm.jpg", alt: { en: "Studio with sitting area and split air-conditioning", ar: "استوديو مع جلسة ومكيف" } },
+    { src: "assets/img/photos/room.jpg", thumb: "assets/img/photos/room-sm.jpg", alt: { en: "Room with two single beds", ar: "غرفة بسريرين مفردين" } },
+    { src: "assets/img/photos/courtyard.jpg", thumb: "assets/img/photos/courtyard-sm.jpg", alt: { en: "The complex's courtyard by day", ar: "ساحة المجمع نهاراً" } },
+    { src: "assets/img/photos/bath-1.jpg", thumb: "assets/img/photos/bath-1-sm.jpg", alt: { en: "Bathroom", ar: "دورة المياه" } },
+    { src: "assets/img/photos/bath-2.jpg", thumb: "assets/img/photos/bath-2-sm.jpg", alt: { en: "Bathroom", ar: "دورة المياه" } },
+    { src: "assets/img/photos/bath-3.jpg", thumb: "assets/img/photos/bath-3-sm.jpg", alt: { en: "Bathroom with two basins", ar: "دورة مياه بمغسلتين" } }
+  ],
+
+  /*
+   * Guest reviews — real Google reviews of this listing (checked 16 Oct 2026). English is
+   * Google's translation of the Arabic original. Only add reviews that exist on Google.
+   */
+  reviewsUrl: "https://www.google.com/maps/place/data=!4m2!3m1!1s0x3dd3e12c0fb2bf1d:0xcad209effd5626ba",
+  reviews: [
+    {
+      name: "Aseel Ahmed", when: { en: "Sep 2026", ar: "سبتمبر 2026" },
+      text: {
+        en: "One of the best residential complexes I've stayed in: quiet, clean, comfortable and upscale. Special thanks to the receptionist, Hassan. The prices are very reasonable for the quality.",
+        ar: "من أفضل المجمعات السكنية التي سكنت بها. المكان هادئ، نظيف، ويوفر بيئة مريحة وراقية. الشكر الموصول لموظف الاستقبال الأخ حسن. الأسعار مناسبة جدًا مقابل جودة الخدمات."
+      }
+    },
+    {
+      name: { en: "Abu Amir Al Fahad", ar: "ابو امير الفهد" }, when: { en: "Feb 2026", ar: "فبراير 2026" },
+      text: {
+        en: "Thank you for the warm welcome and excellent service. Clean and comfortable, convenient location — a truly lovely stay. I'll be back, and I recommend it to everyone.",
+        ar: "أشكر إدارة السعادة رويال على حسن الاستقبال والخدمة الممتازة. السكن نظيف ومريح والموقع مناسب، وكانت إقامة جميلة فعلًا، وبإذن الله أكرر الزيارة. أنصح به الجميع."
+      }
+    },
+    {
+      name: "CY-5", when: { en: "Jun 2026", ar: "يونيو 2026" },
+      text: {
+        en: "Hassan is a well-mannered young man — thank you for the smooth service. A good room and very reasonable prices.",
+        ar: "حسن شاب خلوق، شكرا على التعامل السلس. غرفة جيدة وأسعار مناسبة جداً."
+      }
+    },
+    {
+      name: { en: "Haroun Al Khulaidi", ar: "هارون الخليدي" }, when: { en: "Feb 2026", ar: "فبراير 2026" },
+      text: {
+        en: "Clean, tidy accommodation at a reasonable price that makes you feel comfortable and happy. Honestly, wonderful.",
+        ar: "سكن نظيف ومرتب وسعره مناسب ويمنحك الشعور بالراحة والسعادة. صراحة رائع جداً."
+      }
+    },
+    {
+      name: "Basheer Althalaya", when: { en: "Sep 2026", ar: "سبتمبر 2026" },
+      text: {
+        en: "Truly a wonderful, quiet place to stay. Thank you to the management for the warm welcome.",
+        ar: "فعلاً سكن رائع وهادئ. نشكر إدارة المجمع على حسن الاستقبال."
+      }
+    },
+    {
+      name: "Marwa Meem", when: { en: "Aug 2026", ar: "أغسطس 2026" },
+      text: {
+        en: "Clean and tidy, and the location is excellent.",
+        ar: "السكن نظيف ومرتب والمكان ممتاز."
+      }
+    }
   ],
 
   // Nearby highlights. Generic descriptions only — no distances are claimed.
@@ -251,6 +307,9 @@ window.SITE_CONFIG = {
       "room.perNight": "/ night",
       "room.currency": "OMR",
       "room.askRate": "Ask for today's rate",
+      "room.tagStay": "Daily & monthly",
+      "room.tagBills": "Bills included",
+      "room.photoOf": "Photo {n} of {total}",
       "room.size": "Size",
       "room.beds": "Beds",
       "room.guests": "Up to {n} guests",
@@ -316,6 +375,13 @@ window.SITE_CONFIG = {
 
       "footer.rights": "All rights reserved.",
 
+      "reviews.eyebrow": "Guest reviews",
+      "reviews.title": "What our guests say",
+      "reviews.count": "{n} Google reviews",
+      "reviews.all": "Read all reviews on Google",
+      "reviews.translated": "Translated from Arabic",
+      "reviews.source": "Google review",
+
       "sister.eyebrow": "Also from Al Khaleel",
       "sister.title": "Need a bigger apartment?",
       "sister.lead": "Our sister building has two-bedroom apartments for families and monthly stays.",
@@ -363,6 +429,9 @@ window.SITE_CONFIG = {
       "room.perNight": "/ لليلة",
       "room.currency": "ر.ع.",
       "room.askRate": "اسأل عن سعر اليوم",
+      "room.tagStay": "يومي وشهري",
+      "room.tagBills": "شامل الفواتير",
+      "room.photoOf": "الصورة {n} من {total}",
       "room.size": "المساحة",
       "room.beds": "الأسرّة",
       "room.guests": "حتى {n} ضيوف",
@@ -426,6 +495,13 @@ window.SITE_CONFIG = {
       "contact.tbd": "__",
 
       "footer.rights": "جميع الحقوق محفوظة.",
+
+      "reviews.eyebrow": "آراء الضيوف",
+      "reviews.title": "ماذا يقول ضيوفنا",
+      "reviews.count": "{n} تقييماً على جوجل",
+      "reviews.all": "اقرأ كل التقييمات على جوجل",
+      "reviews.translated": "",
+      "reviews.source": "تقييم على جوجل",
 
       "sister.eyebrow": "أيضاً من الخليل",
       "sister.title": "تحتاج شقة أكبر؟",

@@ -121,8 +121,10 @@
     renderStars();
 
     var hero = $("#hero-img");
-    hero.src = CFG.images.hero.src;
     hero.alt = L(CFG.images.hero.alt);
+    $all(".hero-slide").forEach(function (img, i) {
+      if (i > 0 && CFG.images.heroSlides[i]) img.alt = L(CFG.images.heroSlides[i].alt);
+    });
 
     $all("[data-wa]").forEach(function (a) {
       a.href = waLink(t("wa.general", { business: L(BIZ.name) }));
@@ -138,16 +140,18 @@
     $("#year").textContent = String(new Date().getFullYear());
   }
 
-  function renderStars() {
-    var wrap = $(".stars");
+  function fillStars(wrap, rating) {
     wrap.textContent = "";
-    var rating = BIZ.googleRating;
     for (var i = 0; i < 5; i++) {
       var fill = Math.max(0, Math.min(1, rating - i));
       var star = el("span", { class: "star" }, [icon("star", "star-bg"), icon("star", "star-fg")]);
       star.style.setProperty("--fill", Math.round(fill * 100) + "%");
       wrap.appendChild(star);
     }
+    return wrap;
+  }
+  function renderStars() {
+    $all(".rating-badge .stars, .score-stars").forEach(function (w) { fillStars(w, BIZ.googleRating); });
   }
 
   // ---------- rooms ----------
@@ -165,7 +169,11 @@
           " " + t("room.perNight")
         ]);
       } else if (CFG.hidePlaceholders) {
-        price = el("p", { class: "price-tag", text: t("room.askRate") });
+        // No price yet: show two confirmed selling points instead.
+        price = el("p", { class: "room-tags" }, [
+          el("span", { class: "tag" }, [icon("calendar"), t("room.tagStay")]),
+          el("span", { class: "tag" }, [icon("bolt"), t("room.tagBills")])
+        ]);
       } else {
         price = el("p", { class: "price-tag" }, [
           t("room.from") + " ",
@@ -208,10 +216,7 @@
       }, [icon("whatsapp"), el("span", { text: t("room.book") })]);
 
       var card = el("li", { class: "card room-card reveal" }, [
-        el("div", { class: "room-photo" }, [
-          el("img", { src: room.photo, alt: name, loading: "lazy", decoding: "async", width: "800", height: "600" }),
-          price
-        ]),
+        roomPhotos(room, name, price),
         el("div", { class: "room-body" }, [
           el("h3", { text: name }),
           L(room.description) ? el("p", { class: "room-desc", text: L(room.description) }) : null,
@@ -223,6 +228,33 @@
       ]);
       list.appendChild(card);
     });
+  }
+
+  // Swipeable photo strip (scroll-snap) with dots and a counter.
+  function roomPhotos(room, name, price) {
+    var photos = room.photos && room.photos.length ? room.photos : [room.photo];
+    var track = el("div", { class: "room-track", tabindex: photos.length > 1 ? "0" : null, "aria-label": name });
+    photos.forEach(function (src, i) {
+      track.appendChild(el("img", { src: src, alt: i === 0 ? name : "", loading: "lazy", decoding: "async", width: "800", height: "600" }));
+    });
+    var box = el("div", { class: "room-photo" }, [track, price]);
+    if (photos.length > 1) {
+      var count = el("span", { class: "photo-count", dir: "ltr" }, [icon("image"), "1/" + photos.length]);
+      var dots = el("div", { class: "dots" });
+      photos.forEach(function (_, i) {
+        var d = el("button", { type: "button", class: "dot" + (i === 0 ? " on" : ""), "aria-label": t("room.photoOf", { n: i + 1, total: photos.length }) });
+        d.addEventListener("click", function () { track.scrollTo({ left: track.children[i].offsetLeft - track.offsetLeft, behavior: "smooth" }); });
+        dots.appendChild(d);
+      });
+      track.addEventListener("scroll", function () {
+        var i = Math.round(Math.abs(track.scrollLeft) / track.clientWidth);
+        count.lastChild.textContent = (i + 1) + "/" + photos.length;
+        $all(".dot", dots).forEach(function (d, j) { d.classList.toggle("on", i === j); });
+      }, { passive: true });
+      box.appendChild(count);
+      box.appendChild(dots);
+    }
+    return box;
   }
 
   var AMENITY_LABELS = {
@@ -255,7 +287,7 @@
         type: "button",
         class: "gallery-item",
         "aria-label": t("gallery.open", { n: i + 1, total: total }) + " — " + L(g.alt)
-      }, [el("img", { src: g.src, alt: "", loading: "lazy", decoding: "async", width: "800", height: "600" })]);
+      }, [el("img", { src: g.thumb || g.src, alt: "", loading: "lazy", decoding: "async", width: "800", height: "600" })]);
       btn.addEventListener("click", function () { openLightbox(i); });
       list.appendChild(el("li", { class: "reveal" }, [btn]));
     });
@@ -350,6 +382,35 @@
       times.appendChild(el("dt", {}, [icon("clock"), t(row[0])]));
       times.appendChild(el("dd", {}, [value === null ? tbd() : value]));
     });
+  }
+
+  // ---------- reviews ----------
+  function renderReviews() {
+    var section = $("#reviews");
+    if (!CFG.reviews || !CFG.reviews.length) { section.hidden = true; return; }
+    $("#reviews-count").textContent = t("reviews.count", { n: BIZ.reviewCount || CFG.reviews.length });
+    $("#reviews-score").href = BIZ.mapsUrl;
+    $("#reviews-all").href = CFG.reviewsUrl || BIZ.mapsUrl;
+    var list = $("#reviews-list");
+    list.textContent = "";
+    var translated = t("reviews.translated");
+    function card(r, hidden) {
+      var name = L(r.name);
+      return el("li", { class: "review", "aria-hidden": hidden ? "true" : null }, [
+        fillStars(el("span", { class: "stars", role: "img", "aria-label": "5/5" }), 5),
+        el("blockquote", { text: L(r.text) }),
+        el("footer", {}, [
+          el("span", { class: "avatar", "aria-hidden": "true", text: name.charAt(0).toUpperCase() }),
+          el("span", {}, [
+            el("span", { class: "review-name", text: name }),
+            el("span", { class: "review-meta", text: [t("reviews.source"), L(r.when), translated].filter(Boolean).join(" · ") })
+          ])
+        ])
+      ]);
+    }
+    // Two copies make the marquee loop seamlessly; the copy is hidden from screen readers.
+    CFG.reviews.forEach(function (r) { list.appendChild(card(r, false)); });
+    CFG.reviews.forEach(function (r) { list.appendChild(card(r, true)); });
   }
 
   // ---------- sister property ----------
@@ -567,6 +628,7 @@
     renderExplore();
     renderContact();
     renderSister();
+    renderReviews();
     populateFormOptions();
     refreshFormErrors();
     observeReveals();
@@ -627,10 +689,78 @@
     });
   }, { rootMargin: "0px 0px -40px 0px", threshold: 0.08 }) : null;
   function observeReveals() {
+    $all(".section-head").forEach(function (h) { h.classList.add("reveal"); });
     $all(".reveal:not(.in)").forEach(function (n) {
+      // Siblings arrive one after another (max 0.4 s apart in total).
+      var idx = Array.prototype.indexOf.call(n.parentNode.children, n);
+      n.style.setProperty("--delay", Math.min(idx * 0.08, 0.4) + "s");
       if (io) io.observe(n); else n.classList.add("in");
     });
   }
+
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // ---------- hero slideshow ----------
+  (function heroSlideshow() {
+    var slides = CFG.images.heroSlides || [];
+    var media = $("#hero-media");
+    if (slides.length < 2) return;
+    // Load the other slides after the page has loaded, so the first paint stays fast.
+    window.addEventListener("load", function () {
+      slides.slice(1).forEach(function (sl) {
+        media.appendChild(el("img", { class: "hero-slide", src: sl.src, alt: L(sl.alt), decoding: "async" }));
+      });
+      if (reduceMotion) return;
+      $all(".hero-slide", media).forEach(function (img) { img.classList.add("kb"); });
+      var current = 0;
+      setInterval(function () {
+        if (document.hidden) return;
+        var imgs = $all(".hero-slide", media);
+        imgs[current].classList.remove("is-active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("is-active");
+      }, 7000);
+    });
+  })();
+
+  // ---------- number counters (4.4 ★) ----------
+  function runCounter(node) {
+    var target = parseFloat(node.getAttribute("data-count"));
+    var decimals = parseInt(node.getAttribute("data-decimals") || "0", 10);
+    if (reduceMotion) { node.textContent = target.toFixed(decimals); return; }
+    var start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / 1400);
+      var eased = 1 - Math.pow(1 - p, 3);
+      node.textContent = (target * eased).toFixed(decimals);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counterIO = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { runCounter(en.target); counterIO.unobserve(en.target); }
+    });
+  }, { threshold: 0.6 }) : null;
+  $all("[data-count]").forEach(function (n) { if (counterIO) counterIO.observe(n); });
+
+  // ---------- twinkling garland over the Location section ----------
+  (function garland() {
+    var svg = $(".garland");
+    if (!svg) return;
+    var path = $("path", svg), g = $(".bulbs", svg);
+    var len = path.getTotalLength();
+    for (var i = 1; i < 24; i++) {
+      var pt = path.getPointAtLength((len * i) / 24);
+      var c = document.createElementNS(SVGNS, "circle");
+      c.setAttribute("cx", pt.x.toFixed(1));
+      c.setAttribute("cy", (pt.y + 5).toFixed(1));
+      c.setAttribute("r", "3.4");
+      c.style.animationDelay = ((i * 0.37) % 3.2).toFixed(2) + "s";
+      g.appendChild(c);
+    }
+  })();
 
   renderJsonLd();
   setLang(lang, false);

@@ -1,7 +1,9 @@
 # Images
 
-Everything in `placeholders/` is a drawn stand-in. Swap each one for a real photo, then point
-`site-config.js` at the new file.
+`photos/` holds the owner's own photos (from his WhatsApp catalogue / Google listing), each with a
+700 px `-sm.jpg` copy made by `tools/make_thumbs.sh`. `placeholders/` now only supplies the
+Explore Salalah illustrations. Still worth asking the owner for: a kitchenette photo, a wide
+(landscape) daytime shot of the building for the hero, and the Al Khaleel Building photos.
 
 ## Photos to collect from the owner's WhatsApp catalogue (https://wa.me/c/96898974409)
 

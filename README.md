@@ -29,14 +29,19 @@ Open `site-config.js` in any text editor. Everything has an `en` and `ar` versio
 * **Rooms** — edit `name`, `description`, `size`, `beds`, `guests`, `amenities` (icon names listed at
   the top of the file). Add a room by copying a `{ ... }` block; delete one by removing its block.
   Rooms also appear automatically in the booking form's "Room type" list.
-* **Photos** — put files in `assets/img/photos/` and change the paths, e.g.
-  `photo: "assets/img/photos/studio.jpg"`. See `assets/img/README.md`.
-* **Why stay with us** — the `features` list. These six points are the brief's assumptions:
-  confirm each with the owner and delete any that are not true.
+* **Photos** — put files in `assets/img/photos/`, run `./tools/make_thumbs.sh` (makes the 700 px
+  `-sm.jpg` copies used by room cards and the gallery grid), then add them to the config:
+  room `photos: [...]` (swipeable strip on each card), `gallery` (`src` full size for the lightbox,
+  `thumb` for the grid), `images.heroSlides` (the hero cross-fades through these). See `assets/img/README.md`.
+* **Reviews** — `reviews` holds real Google reviews (English = Google's translation, Arabic =
+  the original). Only add reviews that exist on Google. Update `business.reviewCount` and
+  `googleRating` together when the Google numbers change.
+* **Sister building** — `sister` (Al Khaleel Building, monthly apartments). `sister: null` hides it.
+* **Why stay with us** — the `features` list; every point comes from the owner's WhatsApp catalogue.
 * **Phones / WhatsApp / map** — in `business`.
 * **Check-in / check-out times** — `business.checkIn` / `checkOut` (shown in Contact once set).
-* **Google review count** — `business.reviewCount`. The star rating is only added to Google's
-  structured data once this is filled in (Google needs both).
+* **Google review count** — `business.reviewCount` (13 on 16 Oct 2026). The star rating goes into
+  Google's structured data only while this is set (Google needs both).
 * **Before showing it live with gaps:** set `hidePlaceholders: true` and every unknown value is
   replaced with friendly wording ("Ask for today's rate") instead of "__".
 * **Any wording** — the `text.en` / `text.ar` blocks. `{room}`, `{name}` etc. are filled in
@@ -84,12 +89,30 @@ sips -s format jpeg -s formatOptions 82 og.png --out assets/img/og-image.jpg && 
 
 WhatsApp caches link previews; to see a new image, share the link with `?v=2` on the end.
 
-## Facts used (from the owner — nothing else is claimed)
+## Where the facts came from (checked 16 Oct 2026)
 
-Name EN/AR, tagline, Salalah / Dhofar, Google rating 4.4, WhatsApp +968 9897 4409, phones
-+968 7921 5132 / 9800 2774 / 9066 3784, WhatsApp catalogue, Google Maps link. Prices, room list,
-sizes, amenities and check-in times are **unknown** and shown as placeholders. The Explore Salalah
-descriptions are general and claim no distances. No reviews are quoted.
+| Fact | Source |
+|---|---|
+| Two unit types (room + bathroom + kitchenette; room + bathroom), daily & monthly rent, water/electricity/internet/parking/cleaning/reception included, "South Al Saadah, near all services" | Owner's WhatsApp catalogue item "مجمع السعاده رويال" |
+| Phones 9897 4409 (WhatsApp), 9066 3784, 9800 2774; sister Al Khaleel Building (2 bed, 2 bath, hall, kitchen) on 7921 5132 | Owner's WhatsApp auto-reply |
+| Al Khaleel Building OMR 110/month (was 120), utilities included, cleaning, parking, reception, lift | Owner's WhatsApp catalogue item "شقه غرفتين وصاله…" |
+| Rating 4.4 from 13 reviews, category Hotel, pin 17.0587823, 54.1563167, plus code 3554+GG, the six quoted reviews | Google Maps listing |
+| All photos | The owner's own photos (identical in the WhatsApp catalogue and the Google listing "by owner"); the building shot is cropped to leave out a child and a car plate, the night shot to leave out cars |
+
+Still **unknown**: nightly prices, sizes, beds, guests per unit, check-in/out times, logo. Room
+cards show "Daily & monthly · Bills included" until prices are set. The Explore Salalah texts are
+general and claim no distances. Not quoted: the two 1-star reviews, and one 5-star review posted
+by the sister building's own account.
+
+Open question for the owner: the catalogue's link for the apartments points to "بناية وادي الريم",
+the auto-reply's to "بناية الخليل" (the site uses the latter).
+
+## Motion
+
+Hero cross-fade with a slow zoom (starts after load), headline rising in, scroll hint, cards
+arriving one after another, review marquee (pauses on hover), counting rating, twinkling
+string-light garland over Location (echoing the courtyard's real lights), button shine. All of it
+switches off under the visitor's "reduce motion" setting.
 
 ## Checks run
 
